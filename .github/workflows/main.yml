@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+    - test/jsonvalidator
+  workflow_dispatch:
+name: Updated json validation
+jobs:
+  validate_configurations:
+    name: Validate configurations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate Json schema
+        uses: ./github/actions/jsonValidator
+        with:
+          json_schema: ./schemas/user-schema.json
+          json_path_pattern: ./users/*.json
+          send_comment: true
+          clear_comments: true
